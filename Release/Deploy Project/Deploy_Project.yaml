@@ -1,0 +1,39 @@
+- defaultTab: summary
+  description: Deploy project on target server.
+  executionEnabled: true
+  group: Release
+  id: 7793dc02-cd90-4035-aaa6-9dfb24e886ee
+  loglevel: INFO
+  name: Deploy Project
+  nodeFilterEditable: false
+  nodefilters:
+    # https://rundeck.org/docs/man5/job-yaml.html#nodefilters
+    dispatch:
+      excludePrecedence: true
+      keepgoing: false
+      rankAttribute: rank
+      rankOrder: descending
+      successOnEmptyNodeFilter: false
+      threadcount: '1'
+    # filter: 'tags: web name: web-.* !os-family: windows'
+    filter: 'osFamily: unix'
+  nodesSelectedByDefault: true
+  options:
+  - description: The project version to deploy.
+    enforced: true
+    name: Version
+    required: true
+    values:
+    - v1
+    - v2
+    - v3
+  scheduleEnabled: true
+  sequence:
+    # https://rundeck.org/docs/man5/job-yaml.html#sequence
+    commands:
+    - script: |-
+        #!/bin/bash
+        echo "Version: @option.Version@"
+    keepgoing: false
+    strategy: node-first
+  uuid: 7793dc02-cd90-4035-aaa6-9dfb24e886ee
